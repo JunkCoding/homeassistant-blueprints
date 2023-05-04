@@ -87,5 +87,7 @@ condition:
         id: 't2'  
 
 action:
+- choose:
+  default:
   - service: switch.turn_on
-  - service: switch.turn_off
+
