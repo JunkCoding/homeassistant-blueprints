@@ -1,42 +1,21 @@
 # Humidity Control
 #
-# SETUP:
-# 1) Set up a derivative sensor built up from your humidity data.
-# You can do this by manually editing your configuration.yaml file with a new "derivative" sensor.
-# Here is an example, based off of a "sensor.master_bathroom_humidity" sensor that's already set up, and
-# I'm taking a derivative of the change in humidity over the last 5 minutes.
-# sensor:
-#   - platform: derivative
-#     source: sensor.master_bathroom_humidity
-#     name: Master Bathroom Humidity Delta
-#     round: 1
-#     unit_time: min
-#     time_window: "00:05:00"
-# ---
-# 2) Add this blueprint to your blueprints.
-# 3) Choose your new derivative sensor for the "Humidity Derivative Sensor" input.
-# 4) Choose reasonable values given your environment for how much the humidity has to change over a 5 minute period
-#    (or whatever you set your derivative sensor to) before you start the fan
-# 5) Choose a value for how long the fan should run based on how long you've observed your fan taking to clear out the
-#    room of moisture after a shower.
-# 6) Choose the switch for your fan.
-# 7) Enjoy and tweak, as this first pass is probably not going to be sufficient: but hopefully it serves as a good
-#    starting point for something more sophisticated.
+
 blueprint:
-  name: Bathroom Fan Humidity Control
-  description: A first pass at controlling bathroom fans by checking the change in humidity and being able to enter your own guesses for certain thresholds.
+  name: Room Humidity Control
+  description: Switch on a fan or dehumidifier to control a rooms humidity level.
   domain: automation
-  source_url: https://github.com
+  source_url: https://github.com/JunkCoding/homeassistant-blueprints/blob/main/humidity_control.yaml
   input:
-    humidity_derivative_sensor:
-      name: Humidity Derivative Sensor 
-      description: IMPORTANT set up a derivative sensor for your humidity in configuration.yaml and restart before using this!
+    humidity_sensor:
+      name: Humidity Sensor 
+      description: Humidity sensor, ideally located in the room of the fan or dehumidifier
       selector:
         entity:
-    humidity_change_percent_to_start:
-      name: Percent change to start fan
-      description: Over the given period of time, how much % should the humidity have risen to trigger this fan.
-      default: 10
+    humidity_percent_to_start:
+      name: Turn on at, value
+      description: What humidity percentage to turn on.
+      default: 58
       selector:
         number:
           min: 1
@@ -48,19 +27,22 @@ blueprint:
         target:
           entity:
             domain: switch
-    time_to_run:
-      name: Duration of time to run
-      description: once humidity threshold has been reached, run the fan for this long.  Restart the timer if the threshold gets reached again.
-      default: '00:45:00'
+
+    humidity_percent_to_stop:
+      name: Turn on off, value
+      description: What humidity percentage to turn off.
+      default: 50
       selector:
-        time:
+        number:
+          min: 1
+          max: 100
+          unit_of_measurement: percent
 
 trigger:
   - platform: numeric_state
-    entity_id: !input humidity_derivative_sensor
-    above: !input humidity_change_percent_to_start
+    entity_id: !input humidity_sensor
+    above: !input humidity_percent_to_start
     below: '100'
-    for: '00:00:01'
 
 action:
   - service: switch.turn_on
