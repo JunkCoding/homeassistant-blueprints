@@ -56,11 +56,11 @@ variables:
 
 trigger:
   - platform: numeric_state
-    id: 't1'
+    id: "t1"
     entity_id: !input humidity_sensor
     above: !input humidity_pcnt_switch_on
   - platform: numeric_state
-    id: 't2'
+    id: "t2"
     entity_id: !input humidity_sensor
     below: !input humidity_pcnt_switch_off
 
