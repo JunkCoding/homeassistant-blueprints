@@ -71,7 +71,10 @@ condition:
 
 action:
   - choose:
-  default:
-    - alias: "Check trigger is t1"
+    - alias: "blah"
       condition: trigger
-      id: 't1'
+      id: 't2'
+    default:
+      - alias: "Check trigger is t1"
+        condition: trigger
+        id: 't1'
