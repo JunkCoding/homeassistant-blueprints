@@ -17,7 +17,8 @@ blueprint:
       selector:
         target:
           entity:
-            domain: switch
+            domain:
+              - switch
     humidity_percent_to_start:
       name: Turn on at percent humidity
       description: What humidity percentage to turn on.
