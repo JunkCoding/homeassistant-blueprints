@@ -67,7 +67,7 @@ trigger:
 condition:
   - condition: or
     conditions:
-    - "{{ states[humidity_sensor].state | int < humidity_pcnt_switch_off | int) }}"
+    - "{{ humidity_sensor < humidity_pcnt_switch_off }}"
 
 
 
