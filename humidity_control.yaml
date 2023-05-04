@@ -53,6 +53,9 @@ variables:
   target_switch: !input target_switch
   humidity_pcnt_switch_on: !input humidity_pcnt_switch_on
   humidity_pcnt_switch_off: !input humidity_pcnt_switch_off
+
+condition:
+  - condition:
   
 trigger:
   - platform: numeric_state
