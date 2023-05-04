@@ -75,6 +75,7 @@ condition:
         match: any
       - condition: trigger
         id: 't1'
+  - conditions: or
     conditions:
     - condition: and
       conditions:
