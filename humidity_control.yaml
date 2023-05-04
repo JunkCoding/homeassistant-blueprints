@@ -21,6 +21,7 @@ blueprint:
           entity:
             domain:
               - switch
+              - fan
     humidity_percent_to_start:
       name: Turn on at percent humidity
       description: What humidity percentage to turn on.
@@ -42,6 +43,9 @@ blueprint:
           step: 1
           unit_of_measurement: percent
 
+mode: restart
+max_exceeded: silent
+
 trigger:
   - platform: numeric_state
     entity_id: !input humidity_sensor
@@ -54,5 +58,3 @@ action:
   - service: switch.turn_off
     target: !input fan_switch_target
 
-mode: restart
-max_exceeded: silent
