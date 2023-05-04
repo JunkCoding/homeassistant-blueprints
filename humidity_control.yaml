@@ -43,12 +43,10 @@ trigger:
     entity_id: !input humidity_sensor
     above: !input humidity_percent_to_start
     below: '100'
-    for: '00:00:00'
 
 action:
   - service: switch.turn_on
     target: !input fan_switch_target
-  - delay: !input time_to_run
   - service: switch.turn_off
     target: !input fan_switch_target
 
