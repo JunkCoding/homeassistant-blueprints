@@ -27,7 +27,7 @@ blueprint:
           min: 1
           max: 100
           step: 1
-          unit_of_measurement: '%'
+          unit_of_measurement: percent
     humidity_percent_to_stop:
       name: Turn off at percentage humidity
       description: What humidity percentage to turn off.
@@ -37,7 +37,7 @@ blueprint:
           min: 1
           max: 100
           step: 1
-          unit_of_measurement: '%'
+          unit_of_measurement: percent
 
 trigger:
   - platform: numeric_state
