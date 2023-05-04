@@ -88,6 +88,8 @@ condition:
 
 action:
 - choose:
+  condition: trigger
+    id: 't1'
   default:
   - service: switch.turn_on
 
