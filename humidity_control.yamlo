@@ -59,15 +59,17 @@ trigger:
     id: "t1"
     entity_id: !input humidity_sensor
     above: !input humidity_pcnt_switch_on
+    below: 100
   - platform: numeric_state
     id: "t2"
     entity_id: !input humidity_sensor
     below: !input humidity_pcnt_switch_off
+    above: 0
 
 condition:
-  - condition: or
-    conditions:
-    - "{{ humidity_sensor < humidity_pcnt_switch_off }}"
+  - condition:
 
-
-
+action:
+  - alias: "Check trigger is t1"
+    condition: trigger
+    id: 't1'
