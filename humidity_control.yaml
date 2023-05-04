@@ -65,5 +65,5 @@ condition:
     entity_id: target_switch.state
     state: "off"
 action:
-  - service: switch.turn_on
+  - service: target_switch.turn_on
   entity_id: !input target_switch
