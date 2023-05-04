@@ -3,7 +3,7 @@
 
 blueprint:
   name: Room Humidity Control
-  description: Switch on a fan or dehumidifier to control a rooms humidity level.
+  description: Control a rooms humidity level with a fan or dehumidifier.
   domain: automation
   source_url: https://github.com/JunkCoding/homeassistant-blueprints/blob/main/humidity_control.yaml
   input:
@@ -12,32 +12,33 @@ blueprint:
       description: Humidity sensor, ideally located in the room of the fan or dehumidifier
       selector:
         entity:
+          domain:
+            - sensor:
     humidity_percent_to_start:
-      name: Turn on at, value
+      name: Turn on at percent humidity
       description: What humidity percentage to turn on.
       default: 58
       selector:
         number:
           min: 1
           max: 100
-          unit_of_measurement: percent
-    fan_switch_target:
-      name: Fan Switch
-      selector:
-        target:
-          entity:
-            domain: switch
-
+          unit_of_measurement: '%'
     humidity_percent_to_stop:
-      name: Turn on off, value
+      name: Turn off at percentage humidity
       description: What humidity percentage to turn off.
       default: 50
       selector:
         number:
           min: 1
           max: 100
-          unit_of_measurement: percent
-
+          unit_of_measurement: '%'
+    fan_switch_target:
+      name: Fan Switch
+      selector:
+        target:
+          entity:
+            domain:
+              - switch
 trigger:
   - platform: numeric_state
     entity_id: !input humidity_sensor
