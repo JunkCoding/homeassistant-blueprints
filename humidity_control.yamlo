@@ -78,3 +78,6 @@ action:
       - alias: "Check trigger is t1"
         condition: trigger
         id: 't1'
+      - alias: "Turn on the fan"
+        service: homeassistant.turn_on
+        target: !input target_switch
