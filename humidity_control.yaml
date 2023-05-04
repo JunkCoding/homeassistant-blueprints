@@ -78,7 +78,4 @@ condition:
   
 action:
   - service: switch.turn_on
-    target: !input t1
   - service: switch.turn_off
-    target: !input t2
-
