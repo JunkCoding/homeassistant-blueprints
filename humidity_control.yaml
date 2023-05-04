@@ -14,7 +14,7 @@ blueprint:
         entity:
           domain:
             - sensor
-    fan_switch_target:
+    target_switch:
       name: Fan Switch
       selector:
         target:
@@ -32,7 +32,7 @@ blueprint:
           max: 100
           mode: slider
           step: 1
-          unit_of_measurement: percent
+          unit_of_measurement: '%'
     humidity_percent_to_stop:
       name: Turn off at percentage humidity
       description: What humidity percentage to turn off.
@@ -48,6 +48,12 @@ blueprint:
 mode: restart
 max_exceeded: silent
 
+variables:
+  humidity_sensor: !input humidity_sensor
+  target_switch: !input target_switch
+  humidity_percent_to_start: !input humidity_percent_to_start
+  humidity_percent_to_stop: !input humidity_percent_to_stop
+  
 trigger:
   - platform: numeric_state
     entity_id: !input humidity_sensor
