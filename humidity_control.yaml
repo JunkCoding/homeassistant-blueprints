@@ -60,27 +60,10 @@ trigger:
     entity_id: !input humidity_sensor
     above: !input humidity_pcnt_switch_on
     below: 100
-  - platform: numeric_state
-    id: "t2"
-    entity_id: !input humidity_sensor
-    below: !input humidity_pcnt_switch_off
-    above: 0
-
 condition:
-  - condition:
-  
+  - condition: state
+    entity_id: target_switch.state
+    state: "off"
 action:
-  - choose:
-    - alias: "blah"
-      condition: trigger
-      id: 't2'
-    - alias: "Turn on the fan"
-      service: homeassistant.turn_on
-      target: !input target_switch
-    default:
-      - alias: "Check trigger is t1"
-        condition: trigger
-        id: 't1'
-      - alias: "Turn on the fan"
-        service: homeassistant.turn_on
-        target: !input target_switch
+  - service: switch.turn_on
+  entity_id: !input target_switch
