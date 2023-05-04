@@ -75,7 +75,16 @@ condition:
         match: any
       - condition: trigger
         id: 't1'
-  
+    conditions:
+    - condition: and
+      conditions:
+      - condition: state
+        entity_id: !input target_switch
+        state: 'on'
+        match: any
+      - condition: trigger
+        id: 't2'  
+
 action:
   - service: switch.turn_on
   - service: switch.turn_off
