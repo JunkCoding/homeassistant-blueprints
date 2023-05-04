@@ -12,15 +12,12 @@ blueprint:
       description: Humidity sensor, ideally located in the room of the fan or dehumidifier
       selector:
         entity:
-          domain:
-            - sensor
     fan_switch_target:
       name: Fan Switch
       selector:
         target:
           entity:
-            domain:
-              - switch
+            domain: switch
     humidity_percent_to_start:
       name: Turn on at percent humidity
       description: What humidity percentage to turn on.
