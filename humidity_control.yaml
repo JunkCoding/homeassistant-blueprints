@@ -67,29 +67,7 @@ trigger:
 condition:
   - condition: or
     conditions:
-    - condition: and
-      conditions:
-      - condition: state
-        entity_id: !input target_switch
-        state: 'off'
-        match: any
-      - condition: trigger
-        id: 't1'
-  - conditions: or
-    conditions:
-    - condition: and
-      conditions:
-      - condition: state
-        entity_id: !input target_switch
-        state: 'on'
-        match: any
-      - condition: trigger
-        id: 't2'  
+    - "{{ states[humidity_sensor].state | int < humidity_pcnt_switch_off | int) }}"
 
-action:
-- choose:
-  condition: trigger
-    id: 't1'
-  default:
-  - service: switch.turn_on
+
 
