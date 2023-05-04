@@ -55,15 +55,12 @@ variables:
   humidity_pcnt_switch_off: !input humidity_pcnt_switch_off
   
 trigger:
-  - platform: numeric_state
-    id: "t1"
-    entity_id: !input humidity_sensor
-    above: !input humidity_pcnt_switch_on
-    below: 100
-condition:
-  - condition: state
-    entity_id: target_switch.state
-    state: "off"
+  platform: numeric_state
+  id: "t1"
+  entity_id: !input humidity_sensor
+  above: !input humidity_pcnt_switch_on
+  below: 100
+
 action:
   - service: light.turn_on
   entity_id: !input target_switch
