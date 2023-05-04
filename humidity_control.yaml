@@ -13,7 +13,7 @@ blueprint:
       selector:
         entity:
           domain:
-            - sensor:
+            - sensor
     fan_switch_target:
       name: Fan Switch
       selector:
