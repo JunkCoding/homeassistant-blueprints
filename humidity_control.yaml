@@ -1,0 +1,86 @@
+# Humidity Control
+#
+
+blueprint:
+  name: Room Humidity Control
+  description: Control a rooms humidity level with a fan or dehumidifier.
+  domain: automation
+  source_url: https://github.com/JunkCoding/homeassistant-blueprints/blob/main/humidity_control.yaml
+  input:
+    humidity_sensor:
+      name: Humidity Sensor 
+      description: Humidity sensor, ideally located in the room of the fan or dehumidifier
+      selector:
+        entity:
+          domain:
+            - sensor
+    target_switch:
+      name: Fan Switch
+      selector:
+        target:
+          entity:
+            domain:
+              - switch
+              - fan
+    humidity_pcnt_switch_on:
+      name: Turn on at percent humidity
+      description: What humidity percentage to turn on.
+      default: 58
+      selector:
+        number:
+          min: 1
+          max: 100
+          mode: slider
+          step: 1
+          unit_of_measurement: '%'
+    humidity_pcnt_switch_off:
+      name: Turn off at percentage humidity
+      description: What humidity percentage to turn off.
+      default: 50
+      selector:
+        number:
+          min: 1
+          max: 100
+          mode: slider
+          step: 1
+          unit_of_measurement: '%'
+
+mode: restart
+max_exceeded: silent
+
+variables:
+  humidity_sensor: !input humidity_sensor
+  target_switch: !input target_switch
+  humidity_pcnt_switch_on: !input humidity_pcnt_switch_on
+  humidity_pcnt_switch_off: !input humidity_pcnt_switch_off
+  
+trigger:
+  - platform: numeric_state
+    id: "t1"
+    entity_id: !input humidity_sensor
+    above: !input humidity_pcnt_switch_on
+    below: 100
+  - platform: numeric_state
+    id: "t2"
+    entity_id: !input humidity_sensor
+    below: !input humidity_pcnt_switch_off
+    above: 0
+
+condition:
+  - condition:
+  
+action:
+  - choose:
+    - alias: "blah"
+      condition: trigger
+      id: 't2'
+    - alias: "Turn on the fan"
+      service: homeassistant.turn_on
+      target: !input target_switch
+    default:
+      - alias: "Check trigger is t1"
+        condition: trigger
+        id: 't1'
+      - alias: "Turn on the fan"
+        service: homeassistant.turn_on
+        target: !input target_switch
