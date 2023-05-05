@@ -61,6 +61,6 @@ trigger:
   above: !input humidity_pcnt_switch_on
   below: 100
 action:
-  - service: light.turn_on
-    data:
+  - service: switch.turn_on
+    target:
       entity_id: target_switch
